@@ -1,1 +1,0 @@
-This folder is empty until after you have completed Exercise 1. If you didn't have a Mac to build the starting assets, copy the Exercise 1 > Completed results to this folder.
