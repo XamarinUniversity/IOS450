@@ -100,7 +100,7 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
-    <None Include="libWeatherGadget.a" />
+    <Content Include="libWeatherGadget.a" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
