@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <title>Objective-C iOS Bindings</title>
+    <link rel="stylesheet" type="text/css" href="./parts/res/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./parts/res/styles/prettify.css">
+    <link rel="stylesheet" type="text/css" href="./parts/res/styles/styles.css">
+</head>
+
+<body>
+    <!-- This will be filled in at runtime -->
+    <header role="course-title"></header>
+
+    <section id="main">
+
+        <h2>Before you begin</h2>
+        <p>
+        This is an iOS Objective-C bindings class. To complete the coding exercises, you will need a iOS development environment as well as direct access to Xcode with either a simulator or a device to run the exercise on. Please see the <a href="https://university.xamarin.com/resources/win-setup">Windows setup</a> or <a href="https://university.xamarin.com/resources/mac-setup">macOS setup</a> pages if you need help installing the Xamarin development environment.
+        </p>
+
+        <h2>Overview</h2>
+        <p>A Bindings Library is an assembly containing Managed Callable Wrappers for Objective-C types. This course introduces the core concepts in terms of Libraries, Frameworks and creating C# wrapper classes for Objective-C libraries. The content is a prerequisite to using the complete Xamarin.iOS tool chain used to create iOS Binding libraries.</p>
+
+        <h2>Objectives</h2>
+        <ol>
+            <li>Bind an iOS library manually</li>
+        </ol>
+
+        <h2>Lecture</h2>
+        <p>Here are the <a href="./parts/slides.pdf">lecture slides</a>.</p>
+
+        <h2>Exercises</h2>
+        <ol>
+            <li>
+                <div class="objective">Binding an Objective-C class</div>
+                <a href="./parts/part1.html">Exercise</a>
+                <br />
+                In this exercise, you will bind a simple Objective-C class by hand and use the Managed Callable Wrappers in a Xamarin.iOS app. You will need access to a Mac running Xcode should you wish to recompile the static Objective-C library used.
+            </li>
+        </ol>
+
+        <h2>Demos</h2>
+        <p>Some of the course demos are included with the exercise repository download. They are available as self-guided exercises for review.</p>
+        <ol>
+            <li>
+                <div class="objective">Create and verify an iOS Framework binary and architecture with <code>lipo</code></div>
+                <a href="./parts/demo-lipo.html">Exercise</a>
+                <br />
+                In this demo, we create a universal (fat) binary from a provided Objective-C Framework.
+            </li>
+
+            <li>
+                <div class="objective">Verify an iOS Framework binary contains required members with <code>nm</code></div>
+                <a href="./parts/demo-nm.html">Exercise</a>
+                <br />
+                In this demo, we verify that an iOS binary contains the expected classes and members for a specific architecture.
+            </li>
+        </ol>
+
+        <h2>Additional resources</h2>
+
+        <div class="wslist">
+            <a target="_blank" href="https://docs.microsoft.com/en-us/xamarin/ios/platform/binding-objective-c/walkthrough?tabs=vsmac">Walkthrough: Binding an iOS Objective-C Library - Xamarin </a>        
+            <a target="_blank" href="https://docs.microsoft.com/en-us/xamarin/cross-platform/macios/binding/objective-c-libraries?tabs=vsmac">Binding Objective-C libraries - Xamarin</a>
+        </div>
+
+    </section>
+
+    <script src="./parts/res/js/jquery.min.js"></script>
+    <script src="./parts/res/js/prettify.js"></script>
+    <script src="./parts/res/js/script.js"></script>
+
+    <footer>Copyright (C) 2017 Xamarin</footer>
+</body>
+</html>
