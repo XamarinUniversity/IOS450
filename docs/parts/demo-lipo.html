@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <title>Create and verify an iOS static library binary and architecture</title>
+    <link rel="stylesheet" type="text/css" href="./res/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./res/styles/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="./res/styles/styles.css">
+</head>
+
+<body>
+    <!-- Use the same title as the StartHere -->
+    <header>Objective-C iOS Bindings</header>
+
+    <section id="main">
+
+        <h1 id="page-title"></h1>
+
+        <h2>Duration</h2>
+        <p>10 minutes</p>
+
+        <h2>Goals</h2>
+
+        <p>The primary goal of this exercise is to create a <strong>universal (fat)</strong> library from a provided iOS <strong>WeatherGadget</strong> static library.</p>
+
+        <h2>Required assets</h2>
+        <p>
+            The provided <strong>Part 01 Resources</strong> folder contains an <strong>Assets</strong> subfolder which contains the Xcode project for the <strong>WeatherGadget</strong> static library you will use to create a <strong>fat library</strong> during this exercise. There is also a <strong>Completed</strong> folder with a binary you can use as a reference to check your work. Please make sure you have these folders before you begin.
+        </p>
+        <p>The first steps of this exercise require a Mac with Xcode. If you do not have access to one, you can use the result from the <strong>Completed</strong> folder for later exercises.</p>
+
+        <h2>Challenge</h2>
+        <p>
+            Try to accomplish the following:
+        </p>
+        <p>
+            <ol>
+                <li>Compile the Xcode <strong>WeatherGadget</strong> static library project so that you have 2 architecture builds.</li>
+                <ul>
+                    <li>An <strong>x86_64</strong> build.</li>
+                    <li>An <strong>arm64</strong> build.</li>
+                </ul>
+                <div class="spacing-top">
+                    <button class="spacing-both btn btn-toggle" type="button" data-toggle="collapse" data-toggle-show-text="On what platform should I compile the project?" data-toggle-hide-text="On what platform should I compile the project?" data-target="#unique_id_1">On what platform should I compile the project?</button>
+                    <div class="collapse" id="unique_id_1">
+                        <div class="card card-block">
+                            <p>
+                                You will need to use a Mac with Xcode to compile the included WeatherGadget static library project. If you are using Visual Studio 2017, you will need to switch machines.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <li>Combine the <strong>two</strong> binaries into a <strong>single fat</strong> binary using <strong>lipo</strong>.</li>
+            </ol>
+        </p>
+
+        <!-- Steps -->
+        <h1>Steps</h1>
+
+            <h2>Compile the Xcode WeatherGadget static library project</h2>
+            <p>
+                As a first step, you are going to compile the Xcode project to create two architecture binaries.
+            </p>
+            <ol>
+                <li>
+                    <p>Open Xcode on a Mac and select the <strong>Open another project...</strong> option at the bottom of the inital launch dialog. (If you have Xcode configured to not show the initial window, select <strong>File</strong> > <strong>Open...</strong> from the menu.)</p>
+                </li>
+                <li>
+                    <p>Navigate to the <strong>Exercise 1</strong> > <strong>Assets</strong> folder and open the <strong>WeatherGadget.xcodeproject</strong> in the <strong>WeatherGadget</strong> folder.</p>
+                </li>
+                <li>
+                    <p>Once the project has loaded, you need to check the default signing identity used for this project. Select the <strong>WeatherGadget</strong> project node from within the <strong>Project Navigator</strong>. This will open the <strong>Project Editor</strong> for the project. You want to work within the <strong>Build Settings</strong> tab for the <strong>WeatherGadget</strong> target.</p>
+                    <blockquote class="info-quote">
+                        <strong>Tip:</strong> To open the project navigator, choose <strong>View</strong> > <strong>Navigators</strong> > <strong>Show Project Navigator</strong>. Choose the target from the <strong>Project/Targets</strong> pop-up menu, or in the <strong>Targets</strong> section of the second sidebar, if it appears.
+                    </blockquote>
+                    <p>You will rely on Xcode to automatically manage signing of your project. However, you may be required to update settings appearing in the <strong>Signing</strong> section of the target's <strong>Build Settings</strong> tab (shown by expanding what is shown with the <strong>All</strong> filter).</p>
+                </li>
+                <li>
+                    <p>You are ready to compile your library. First you need to compile the project targeting <strong>x86_64</strong>. To do so, choose an active simulator <strong>Scheme</strong> in the toolbar menu (e.g., <strong>iPhone 8</strong>), if not already selected.</p>
+                </li>
+                <li>
+                    <p>Select <strong>Product</strong> > <strong>Build</strong> from Xcode's menu or press <kbd>&#8984;</kbd>+<kbd>B</kbd>. Xcode will inform you if the compilation succeeded.</p>
+                </li>
+                <li>
+                    <p>Next, compile the project targeting <strong>arm64</strong>. In this step you will need to connect a <strong>device</strong> to your Mac. You will need to make sure the device is <strong>enabled</strong> for development.</p>
+                    <p>In the <strong>Project Navigator</strong>, choose your device from the <strong>Scheme</strong> toolbar menu.</p>
+                    <blockquote class="info-quote">
+                        <strong>Tip:</strong> Xcode assumes you intend to use the selected device for development and automatically registers it for you. If your device is disabled in the Scheme toolbar menu because it is ineligible, you will need to fix that issue before continuing.
+                    </blockquote>
+                    <p>Select <strong>Product</strong> > <strong>Build</strong> from Xcode's menu or press <kbd>&#8984;</kbd>+<kbd>B</kbd>. Xcode will inform you if the compilation succeeded.</p>
+                </li>
+                <li>
+                    <p>Now that there are 2 binary versions for the project you can verify both file architectures. To make these files easier to use, copy the output from the Xcode to a more conveniant location.</p>
+                    <ul>
+                        <li>
+                            <p>In the <strong>Project Navigator</strong>  expand the Products folder.</p>
+                        </li>
+                        <li>
+                            <p>Right-click on the <strong>libWeatherGadget.a</strong> entry and select <strong>Show in Finder</strong> from the contextual menu.</p>
+                            <blockquote class="info-quote">
+                                <strong>Note:</strong> This item will be <font style="color:red;">red</font> if it did not succesfully compile.
+                            </blockquote>
+                        </li>
+                        <li>
+                            <p>Navigate up a director in the folder structure to see your build folders.</p>
+                        </li>
+                        <li>
+                            <p>If you have compiled the both architecture options successfully, you will see at least 2 folders in Finder.</p>
+                            <p>One will be a <strong>Debug-iphoneos</strong> and the other a <strong>Debug-iphoneosimulator</strong>. Inside each of these folders will be a libWeatherGadget.a file.</p>
+                        </li>
+                        <li>
+                            <p>Since you want to combine the binary files from the output folders next, copy both the <strong>Debug-iphoneos</strong> and the <strong>Debug-iphoneosimulator</strong> folders to a convenient location.</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p>On the command line, from within the folder where you copied the Xcode results from above, run the <code class="codeblock">lipo -info</code> command against the <strong>libWeatherGadget.a</strong> binary for each build. Note the architecture reported for each binary.</p>
+                    <div class="spacing-top">
+                        <button class="spacing-both btn btn-toggle" type="button" data-toggle="collapse" data-toggle-show-text="How do I get to a command line?" data-toggle-hide-text="How do I get to a command line?" data-target="#unique_id_2">How do I get to a command line?</button>
+                        <div class="collapse" id="unique_id_2">
+                            <div class="card card-block">
+                                <p>
+                                    To access the command prompt in Mac OS X, open the Terminal application. It is located inside the Utilities folder, which in turn is inside the Applications folder.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="spacing-top">
+                        <button class="spacing-both btn btn-toggle" type="button" data-toggle="collapse" data-toggle-show-text="Where do I find info about lipo?" data-toggle-hide-text="Where do I find info about lipo?" data-target="#unique_id_3">Where do I find info about lipo?</button>
+                        <div class="collapse" id="unique_id_3">
+                            <div class="card card-block">
+                            <p>
+                                On the command line run the <code class="codeblock">man lipo</code> command to access the lipo documentation.
+                            </p>
+                        </div>
+                    </div>
+                    <p>Note how:</p>
+                    <ul>
+                        <li>
+                            <p>Both binaries are reported as <strong>Non-fat</strong> files.</p>
+                        </li>
+                        <li>
+                            <p>The architecture for the <strong>Debug-iphonesimulator</strong> build is listed as <strong>x86_64</strong>.</p>
+                        </li>
+                        <li>
+                            <p>The architecture for the <strong>Debug-iphoneos</strong> build is listed as <strong>arm64</strong>.</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p>The last step is to combine these two binaries into a single fat file.</p>
+                </li>
+                <li>
+                    <p>Open a Terminal command-line session in the same folder as the previous step to allow us to run the commands to create a fat binary.</p>
+                    <blockquote class="info-quote">
+                        <strong>Tip:</strong> to navigate to the directory, you can open a Terminal session, start typing `cd ` (with a space) and then drag the desired destination folder from Finder onto the Terminal window. Hit Enter on the resulting command to navigate to that directory.
+                    </blockquote>
+                    <ul>
+                        <li>
+                            <p>Run the following command to create our fat binary destination folder: <code class="codeblock">mkdir Debug-Build</code></p>
+                        </li>
+                        <li>
+                            <p>Next, run the first `lipo` command to create our fat binary: <code class="codeblock">lipo -create -output libWeatherGadget.a Debug-iphoneos/libWeatherGadget.a Debug-iphonesimulator/libWeatherGadget.a</code></p>
+                            <p>this creates a combined fat binary file from the Simulator and Device builds from the previous steps.</p>
+                        </li>
+                        <li>
+                            <p>Last, query the fat binary we created with the following command: <code class="codeblock">lipo -info Debug-Build/libWeatherGadget.a</code> to see that the resulting file contains both architectures.</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Optional:</strong> Create a new folder named <strong>Debug-Build</strong> and copy either one of the other <strong>Debug-</strong> files here. Replace the single architecture binary <strong>libWeatherGadget.a</strong> file with the fat binary you created.</p>
+                </li>
+            </ol>
+
+        <h1>Summary</h1>
+        <p>In this execise you compiled an Xcode static library project so that you have two (2) architecture builds, one x86_64 build and one arm64 build.</p>
+        <p>You combined the two binaries into a single fat binary using lipo and will be able to use this library to create and test applications built for simulators and devices.</p>
+
+        <div class="align-right">
+            <a href="../Start%20Here.html">Go Back</a>
+        </div>
+    </section>
+
+    <script src="./res/js/jquery.min.js"></script>
+    <script src="./res/js/prettify.js"></script>
+    <script src="./res/js/script.js"></script>
+
+    <footer>Copyright (C) 2018 Xamarin</footer>
+</body>
+</html>
